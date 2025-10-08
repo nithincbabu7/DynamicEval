@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+        content="DynamicEval is a benchmark for text-to-video models that evaluates dynamic camera motion with new background and foreground consistency metrics for better alignment with human judgments.">
   <meta name="keywords" content="text-to-video, video synthesis, evaluation benchmark">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DynamicEval: Rethinking Evaluation for Dynamic Text-to-Video Synthesis</title>
@@ -42,11 +42,18 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       if (bulmaCarousel) {
-        bulmaCarousel.attach('#results-carousel', {
+        const carousels = bulmaCarousel.attach('.results-carousel', {
           slidesToScroll: 1,
           slidesToShow: 1,
-          loop: true,
           autoplay: true,
+          loop: true,
+          autoplaySpeed: 8000,
+          duration: 1000
+        });
+
+        carousels.forEach(carousel => {
+          carousel.element.addEventListener('mouseenter', () => carousel.pause());
+          carousel.element.addEventListener('mouseleave', () => carousel.start());
         });
       }
     });
@@ -226,17 +233,17 @@ Extensive experiments demonstrate that our proposed metrics achieve stronger cor
 <section class="hero is-light">
   <div class="hero-body">
     <div class="columns is-centered has-text-centered">
-      <h2 class="title is-3">Videos from the dataset</h2>
+      <h2 class="title is-3">Videos in DynamicEval Benchmark</h2>
     </div>
     <div class="content has-text-centered is-centered">
     <p>We show a grid of videos for a set of prompts in our DynamicEval dataset. The columns represents 10 models, and rows represent 3 random generations in each model.</p>
     </div>
-    
-    <div class="container is-fluid" style="padding: 0;">
-      <div id="results-carousel" class="carousel results-carousel" style="width: 95vw; margin-left: calc(-47.5vw + 50%);">
+
+    <div class="container is-fluid" style="padding: 0; width: 95%;">
+      <div id="results-carousel" class="carousel results-carousel" style="width: 100%;">
         
         <div class="item item-a has-text-centered">
-          <video poster="" id="a" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+          <video poster="" id="a" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
             <source src="./static/videos/prompt_id_004_compressed.mp4"
                     type="video/mp4">
           </video>
@@ -244,7 +251,7 @@ Extensive experiments demonstrate that our proposed metrics achieve stronger cor
         </div>
 
         <div class="item item-b has-text-centered">
-          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
             <source src="./static/videos/prompt_id_024_compressed.mp4"
                     type="video/mp4">
           </video>
@@ -252,7 +259,7 @@ Extensive experiments demonstrate that our proposed metrics achieve stronger cor
         </div>
 
         <div class="item item-b has-text-centered">
-          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
             <source src="./static/videos/prompt_id_026_compressed.mp4"
                     type="video/mp4">
           </video>
@@ -260,7 +267,7 @@ Extensive experiments demonstrate that our proposed metrics achieve stronger cor
         </div>
 
         <div class="item item-b has-text-centered">
-          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
             <source src="./static/videos/prompt_id_034_compressed.mp4"
                     type="video/mp4">
           </video>
@@ -268,13 +275,131 @@ Extensive experiments demonstrate that our proposed metrics achieve stronger cor
         </div>
 
         <div class="item item-b has-text-centered">
-          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
             <source src="./static/videos/prompt_id_046_compressed.mp4"
                     type="video/mp4">
           </video>
           <p class="is-size-5" style="margin-top: 0.5em; margin-bottom: 0.5em;"><b>Prompt:</b> "In a cozy dining room, a woman holds a bottle as the wide-angle camera performs a follow shot, revealing a wooden table and chairs in the foreground and a vintage cabinet in the background."</p>
         </div>
 
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="column is-centered has-text-centered">
+        <h2 class="title is-3">Background Scene Consistency - MS-Debias Metric</h2>
+  </div>
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+    <img id="teaser" height="100%" src="./static/images/MSDebias.jpg" alt="Dataset teaser image">
+    </div>
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+  </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+We propose a debiased background consistency metric that isolates moving objects and occlusion regions to provide a more accurate evaluation of temporal smoothness. Specifically, we construct edge masks around object boundaries using SAM-2 segmentation and morphological operations, and generate foreground masks by extracting dynamic object names from the generation prompt (via LLM) and localizing them with GroundingDINO, followed by mask propagation with SAM-2. These masks are used to down-weight contributions from object regions and occlusion edges when computing motion smoothness errors, yielding debiased error maps that better reflect background temporal stability independent of camera motion or moving objects.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Visualizing MS-Debias</h2>
+    </div>
+    <!-- <div class="content has-text-centered is-centered">
+    <p>We show a grid of videos for a set of prompts in our DynamicEval dataset. The columns represents 10 models, and rows represent 3 random generations in each model.</p>
+    </div> -->
+    <div class="container is-fluid" style="padding: 0; width: 95%;">
+      <div id="results-carousel" class="carousel results-carousel" style="width: 100%;">
+        <div class="item item-a has-text-centered">
+          <video poster="" id="a" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
+            <source src="./static/videos/ms_debias_viz_01.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
+            <source src="./static/videos/ms_debias_viz_02.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
+            <source src="./static/videos/ms_debias_viz_03.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="column is-centered has-text-centered">
+        <h2 class="title is-3">Foreground Object Consistency - Tracker-FG Metric</h2>
+  </div>
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+    <img id="teaser" height="100%" src="./static/images/FG-Tracker.jpg" alt="Dataset teaser image">
+    </div>
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+  </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+We propose a debiased background consistency metric that isolates moving objects and occlusion regions to provide a more accurate evaluation of temporal smoothness. Specifically, we construct edge masks around object boundaries using SAM-2 segmentation and morphological operations, and generate foreground masks by extracting dynamic object names from the generation prompt (via LLM) and localizing them with GroundingDINO, followed by mask propagation with SAM-2. These masks are used to down-weight contributions from object regions and occlusion edges when computing motion smoothness errors, yielding debiased error maps that better reflect background temporal stability independent of camera motion or moving objects.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Visualizing MS-Debias</h2>
+    </div>
+    <!-- <div class="content has-text-centered is-centered">
+    <p>We show a grid of videos for a set of prompts in our DynamicEval dataset. The columns represents 10 models, and rows represent 3 random generations in each model.</p>
+    </div> -->
+    <div class="container is-fluid" style="padding: 0; width: 60%;">
+      <div id="results-carousel" class="carousel results-carousel" style="width: 100%;">
+        <div class="item item-a has-text-centered">
+          <video poster="" id="a" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
+            <source src="./static/videos/fg_tracker_viz_01.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
+            <source src="./static/videos/fg_tracker_viz_02.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100%; height: auto;">
+            <source src="./static/videos/fg_tracker_viz_03.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
       </div>
     </div>
   </div>
