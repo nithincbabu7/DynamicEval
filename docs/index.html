@@ -39,6 +39,18 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (bulmaCarousel) {
+        bulmaCarousel.attach('#results-carousel', {
+          slidesToScroll: 1,
+          slidesToShow: 1,
+          loop: true,
+          autoplay: true,
+        });
+      }
+    });
+  </script>
 </head>
 <body>
 
@@ -114,7 +126,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948"
+                <a href="https://arxiv.org/pdf/2510.xxxxx"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -143,7 +155,7 @@
               </span> -->
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/google/nerfies"
+                <a href="https://github.com/nithincbabu7/DynamicEval"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -169,79 +181,13 @@
   </div>
 </section>
 
-<!-- <section class="hero teaser">
-  <div class="container is-max-desktop">
+<section class="hero teaser">
+  <div class="container">
     <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
-      </h2>
+    <img id="teaser" height="100%" src="./static/images/Dataset.jpg" alt="Dataset teaser image">
     </div>
   </div>
-</section> -->
-
-
-<!-- <section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
+</section>
 
 
 <section class="section">
@@ -276,11 +222,69 @@ Extensive experiments demonstrate that our proposed metrics achieve stronger cor
   </div>
 </section>
 
+ 
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Videos from the dataset</h2>
+    </div>
+    <div class="content has-text-centered is-centered">
+    <p>We show a grid of videos for a set of prompts in our DynamicEval dataset. The columns represents 10 models, and rows represent 3 random generations in each model.</p>
+    </div>
+    
+    <div class="container is-fluid" style="padding: 0;">
+      <div id="results-carousel" class="carousel results-carousel" style="width: 95vw; margin-left: calc(-47.5vw + 50%);">
+        
+        <div class="item item-a has-text-centered">
+          <video poster="" id="a" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+            <source src="./static/videos/prompt_id_004_compressed.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="is-size-5" style="margin-top: 0.5em; margin-bottom: 0.5em;"><b>Prompt:</b> "In a cozy nursery filled with toys and a crib, a single cat sniffs at food on the floor, while a wide-angle camera pans around, revealing colorful walls and a rocking chair in the background."</p>
+        </div>
 
-<section class="section">
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+            <source src="./static/videos/prompt_id_024_compressed.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="is-size-5" style="margin-top: 0.5em; margin-bottom: 0.5em;"><b>Prompt:</b> "In a cinematic pull-out shot, a lone person is seen paragliding over a sprawling junkyard, their shadow gliding over heaps of scrap metal and abandoned cars, revealing the chaotic landscape below."</p>
+        </div>
+
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+            <source src="./static/videos/prompt_id_026_compressed.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="is-size-5" style="margin-top: 0.5em; margin-bottom: 0.5em;"><b>Prompt:</b> "A drone follows two men carrying a basket through the sprawling, complex machinery of an outdoor power plant, revealing towering structures and intricate pipes against a backdrop of clear blue sky."</p>
+        </div>
+
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+            <source src="./static/videos/prompt_id_034_compressed.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="is-size-5" style="margin-top: 0.5em; margin-bottom: 0.5em;"><b>Prompt:</b> "An aerial shot captures a cat precariously perched on the edge of a crevasse. In slow motion, the camera moves in to reveal the depth of the icy chasm, then retreats, showing the cat's daring position amidst the expansive landscape."</p>
+        </div>
+
+        <div class="item item-b has-text-centered">
+          <video poster="" id="b" autoplay controls muted loop playsinline style="width: 100vw; height: auto;">
+            <source src="./static/videos/prompt_id_046_compressed.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="is-size-5" style="margin-top: 0.5em; margin-bottom: 0.5em;"><b>Prompt:</b> "In a cozy dining room, a woman holds a bottle as the wide-angle camera performs a follow shot, revealing a wooden table and chairs in the foreground and a vintage cabinet in the background."</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="section">
   <div class="container is-max-desktop">
 
-    <div class="columns is-centered">
+    <div class="columns is-centered"> -->
 
       <!-- Visual Effects. -->
       <!-- <div class="column">
@@ -410,18 +414,19 @@ Extensive experiments demonstrate that our proposed metrics achieve stronger cor
     </div> -->
     <!--/ Concurrent Work. -->
 
-  </div>
-</section>
+  <!-- </div>
+</section> -->
 
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
+    <pre><code>@article{babu2025dynamiceval,
   author    = {Babu, Nithin C and Mahapatra, Aniruddha and Rangwani, Harsh and Soundararajan, Rajiv and Kulkarni, Kuldeep},
   title     = {DynamicEval: Rethinking Evaluation for Dynamic Text-to-Video Synthesis},
-  journal   = {arXiv},
   year      = {2025},
+  journal   = {arXiv preprint},
+  url       = {https://arxiv.org/abs/2510.xxxxx},
 }</code></pre>
   </div>
 </section>
